@@ -36,7 +36,7 @@ tags: MySQL
 
    下图展示客户端连接到 MySQL 服务器的过程
 
-   ![](https://mysqlserverteam.com/wp-content/uploads/2019/03/Connect-768x320.png)
+   ![Connect-768x320.png](http://ww1.sinaimg.cn/large/006XJF4Oly1gbq9st6g8fj30lc08wdgx.jpg)
 
    客户端发起的连接请求放入请求队列中。
 
@@ -50,11 +50,11 @@ tags: MySQL
 
    下图展示命令阶段，客户端与服务器的交互
 
-   ![](https://mysqlserverteam.com/wp-content/uploads/2019/03/QueryResult-768x147.png)
+   ![QueryResult-768x147.png](http://ww1.sinaimg.cn/large/006XJF4Oly1gbq9t32gpnj30lc04374j.jpg)
 
    下图展示连接的释放过程
 
-   ![](https://mysqlserverteam.com/wp-content/uploads/2019/03/Disconnect-768x176.png)
+   ![Disconnect-768x176.png](http://ww1.sinaimg.cn/large/006XJF4Oly1gbq9tbr76cj30lc04wgm2.jpg)
 
    连接关闭时，该连接使用的线程会被清理。若线程缓冲中有空位，则将该线程挂起到线程缓冲中，否则将该线程销毁。
 
