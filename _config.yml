@@ -90,3 +90,9 @@ deploy:
   type: git 
   repo: git@github.com:hespoon/hespoon.github.io.git
   branch: master
+
+# markdown_it_plus:
+#   plugins:
+#     -plugin:
+#       name: markdown-it-table-of-contents 
+#       enable: true
