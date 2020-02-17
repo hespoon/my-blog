@@ -42,17 +42,17 @@ tags:
    
    分为两种情况计算：
    
-   1. i ≤ P
+   1. i < P
    
       找到 i 相对于 Po 的对称位置，设为 j。再分为三种情况。
    
-      * Len[j] < P - i 如下图所示：
+      * Len[j] < P - i + 1 如下图所示：
    
         ![](http://ww1.sinaimg.cn/large/006XJF4Oly1gbxdx60uxbj34r827w0ys.jpg)
    
         此时说明，以 j 为中心的回文串一定在以 Po 为中心的回文串的内部。j 和 i 关于位置 Po 对称，并且，由回文串的定义可知，一个回文串反过来还是一个回文串。所以，以 i 为中心的回文串的长度至少和以 j 为中心的回文串的长度一样长，即 Len[i] ≥ Len[j]。由对称性可知，Len[i] = Len[j]。
    
-      * Len[j] > P - i 如下图所示：
+      * Len[j] > P - i + 1 如下图所示：
    
         ![](http://ww1.sinaimg.cn/large/006XJF4Oly1gbxe6lr6amj34r827wwki.jpg)
    
@@ -64,15 +64,16 @@ tags:
    
         综上所述，Len[i] = P - i + 1
    
-      * Len[j] = P - i 如下图所示：
+      * Len[j] = P - i + 1 如下图所示：
    
         ![](http://ww1.sinaimg.cn/large/006XJF4Oly1gbxgfvlv0pj30h2083wed.jpg)
    
         此时，以 i 为中心的回文串可能会延伸到 P 之外，对于大于 P 的部分，我们还未匹配。因此，要从 P + 1 开始一个一个的匹配，直到发生失配，得出 Len[i] 的值。
    
-   2. i > P
-   
-      这种情况下，对于中点为 i 的回文串还一点都没有匹配。因此，只能一个一个的匹配得出 Len[i] 的值。
+   2. i >= P 如下图所示：
+      ![](http://ww1.sinaimg.cn/large/006XJF4Oly1gbzf37mcc7j348t1g1wgo.jpg)
+      ![](http://ww1.sinaimg.cn/large/006XJF4Oly1gbzfxdznfuj30hl07mglf.jpg)
+      这两种情况下，对于中点为 i 的回文串还一点都没有匹配。因此，只能一个一个的匹配得出 Len[i] 的值。
    
 4. 时间复杂度分析
 
@@ -81,7 +82,59 @@ tags:
 5. 算法实现
 
    ```C++
-   
+   // 返回字符串 s 中的任意一个最长回文子串 
+   string longestPalindrome(string s) {
+        if(s.length()<=1) return s;
+        // 初始化辅助字符串
+        string T="#";
+        for(int i=0;i<s.length();i++){
+            T+=s.substr(i,1)+"#";
+        }
+        // 初始化辅助数组
+        vector<int> Len(T.length());
+        Len[0]=1;
+        int aimIndex=0,Po=0,P=0; // aimIndex 存放最长回文子串的中心字符在 T 中的下标
+        for(int i=1;i<T.length();i++){
+            if(i<P){
+                int j=Po-i+Po;
+                int threshold=P-i+1;
+                if(Len[j]<threshold){
+                    Len[i]=Len[j];
+                }else if(Len[j]>threshold){
+                    Len[i]=P-i+1;
+                }else if(Len[j]==threshold){
+                    int left=i-P+i-1;
+                    int right=P+1;
+                    while(left>=0&&right<T.length()&&T[left]==T[right]){
+                        right++;
+                        left--;
+                    }
+                    Len[i]=right-i;
+                }
+            }else{
+                int left=i-1;
+                int right=i+1;
+                while(left>=0&&right<T.length()&&T[left]==T[right]){
+                    right++;
+                    left--;
+                }
+                Len[i]=right-i;
+            }
+            aimIndex=Len[i]>=Len[aimIndex]?i:aimIndex;
+            if(i+Len[i]-1>P){
+                P=i+Len[i]-1;
+                Po=i;
+            }
+        }
+        // 从 T 中提取最长回文子串
+        string ans="";
+        for(int i=aimIndex-Len[aimIndex]+1;i<=aimIndex+Len[aimIndex]-1;i++){
+            if(T[i]!='#'){
+                ans+=T.substr(i,1);
+            }
+        }
+        return ans;
+    }
    ```
 
    
