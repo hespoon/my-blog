@@ -5,10 +5,10 @@
 # Site
 title: Spirit
 subtitle:
-description:
+description: 全心全意的投入生活
 keywords:
-author: Hespoon
-language:
+author: hespoon
+language: en
 timezone:
 
 # URL
@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: inside
+theme: next
 # 覆盖主题配置
 theme_config: 
   highlight: [
@@ -96,3 +96,11 @@ deploy:
 #     -plugin:
 #       name: markdown-it-table-of-contents 
 #       enable: true
+
+symbols_count_time:
+  symbols: false
+  time: false 
+  total_symbols: true 
+  total_time: false 
+  awl: 4
+  wpm: 275
